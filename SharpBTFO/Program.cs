@@ -100,12 +100,11 @@ namespace SharpBTFO
 
             try
             {
-                Console.WriteLine("[+] Finding all .log files");
                 List<string> logs = new List<string>();
                 string[] drives = Directory.GetLogicalDrives();
                 foreach (string drive in drives)
                 {
-                    Console.WriteLine(drive);
+                    Console.WriteLine($"[+] Finding all .log files on {drive}");
                     logs.AddRange(GetAllFilesFromFolder(drive, "*.log", true));
                 }
                 Console.WriteLine($"[+] Found {logs.Count} .log files");
