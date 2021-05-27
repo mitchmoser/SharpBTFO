@@ -19,7 +19,7 @@ namespace SharpBTFO
                 {
                     if (log.Entries.Count > 0)
                     {
-                        Console.WriteLine($"[+] Deleting {log.Entries.Count} {log.LogDisplayName} Logs");
+                        Console.WriteLine($"[+] Clearing {log.Entries.Count} {log.LogDisplayName} Logs");
                         try
                         {
                             //log.Clear();         // <-- uncomment to fafo
@@ -27,7 +27,7 @@ namespace SharpBTFO
                         catch (Exception ex)
                         {
                             btfo = false;
-                            Console.WriteLine($"[!] Error Deleting Event Log: {ex.Message.Trim()}");
+                            Console.WriteLine($"[!] Error Clearing Event Log: {ex.Message.Trim()}");
                         }
                     }
                 }
