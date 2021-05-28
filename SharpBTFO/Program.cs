@@ -24,12 +24,13 @@ namespace SharpBTFO
                 EventLog[] eventLogs = EventLog.GetEventLogs();
                 foreach (EventLog log in eventLogs)
                 {
-                    if (log.Entries.Count > 0)
+                    int logCount = log.Entries.Count;
+                    if (logCount > 0)
                     {
                         try
                         {
                             //log.Clear();         // <-- uncomment to fafo
-                            Console.WriteLine($"[+] Cleared {log.Entries.Count} {log.LogDisplayName} Logs");
+                            Console.WriteLine($"[+] Cleared {logCount} {log.LogDisplayName} Logs");
                         }
                         catch (Exception ex)
                         {
