@@ -10,6 +10,12 @@ namespace SharpBTFO
     {
         static void Main(string[] args)
         {
+            bool elevated = new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
+            if (!elevated)
+            {
+                Console.WriteLine("You're gonna want to run this elevated...");
+                Environment.Exit(0);
+            }
             printHeader();
             bool btfo = true;
             try
