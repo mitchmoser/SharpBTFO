@@ -115,7 +115,7 @@ namespace SharpBTFO
                     logs.AddRange(GetAllFilesFromFolder(drive, true));
                 }
                 Console.WriteLine($"[+] Found {logs.Count} .log, .bak, and .config files");
-                Console.WriteLine($"[+] Deleting .log files");
+                Console.WriteLine($"[+] Deleting .log, .bak, and .config files");
                 int logCounter = 0;
                 foreach (string log in logs)
                 {
