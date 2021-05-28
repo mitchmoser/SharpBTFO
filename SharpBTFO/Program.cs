@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Security.Principal;
 
 namespace SharpBTFO
 {
@@ -25,15 +26,15 @@ namespace SharpBTFO
                 {
                     if (log.Entries.Count > 0)
                     {
-                        Console.WriteLine($"[+] Clearing {log.Entries.Count} {log.LogDisplayName} Logs");
                         try
                         {
                             //log.Clear();         // <-- uncomment to fafo
+                            Console.WriteLine($"[+] Cleared {log.Entries.Count} {log.LogDisplayName} Logs");
                         }
                         catch (Exception ex)
                         {
                             btfo = false;
-                            Console.WriteLine($"[!] Error Clearing Event Log: {ex.Message.Trim()}");
+                            Console.WriteLine($"[!] Error Clearing {log.LogDisplayName} Logs: {ex.Message.Trim()}");
                         }
                     }
                 }
@@ -41,7 +42,7 @@ namespace SharpBTFO
             catch (Exception ex)
             {
                 btfo = false;
-                Console.WriteLine($"[!] Error Clearing Security Event Logs: {ex.Message.Trim()}");
+                Console.WriteLine($"[!] Error Clearing Event Logs: {ex.Message.Trim()}");
             }
             List<string> PSHistory = new List<string>();
             try
